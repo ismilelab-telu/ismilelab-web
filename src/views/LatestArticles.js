@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux"
+import { getArticles } from "@store/api/post"
 
 const ArticleTabs = ({ activeTab, setActiveTab }) => (
   <div className="tabs">
@@ -16,7 +17,7 @@ const ArticleCard = ({ article }) => (
     <img src={article.image} alt="Article Thumbnail" className="article-image" />
     <div className="article-content">
       <div className="tag-wrapper">
-        <span className={`tag ${article.type.replace(/\s/g, '')}`}>{article.type}</span>
+        <span className={`tag ${article.category.replace(/\s/g, '')}`}>{article.type}</span>
       </div>
       <h3 className="article-title">{article.title}</h3>
       <p className="article-summary">{article.summary}</p>
@@ -35,13 +36,21 @@ const ArticleCard = ({ article }) => (
 );
 
 const LatestArticles = () => {
+  const dispatch = useDispatch()
   const [activeTab, setActiveTab] = useState('All Items');
-  const articles = useSelector(state => state.articles.articles);  // Use articles from Redux
+  // const articles = useSelector(state => state.articles.articles);  // Use articles from Redux
+  const { articles, isLoading } = useSelector((state) => state.post)
   const filteredArticles = articles.filter(article => activeTab === 'All Items' || article.type === activeTab);
+
+  useEffect(() => {
+    dispatch(getArticles())
+    // console.log(articles);
+  }, [])
 
   return (
     <section className="blog-section">
-      <div className="container">
+
+       <div className="container">
         <h1 className="heading1x">Latest Articles</h1>
         <p>Discover the most outstanding AI Articles</p>
         <ArticleTabs activeTab={activeTab} setActiveTab={setActiveTab} />
