@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux"
-import { getArticles } from "@store/api/post"
+import { getArticleList } from "@store/api/post"
 
 const ArticleTabs = ({ activeTab, setActiveTab }) => (
   <div className="tabs">
@@ -43,7 +43,7 @@ const LatestArticles = () => {
   const filteredArticles = articles.filter(article => activeTab === 'All Items' || article.type === activeTab);
 
   useEffect(() => {
-    dispatch(getArticles())
+    dispatch(getArticleList())
     // console.log(articles);
   }, [])
 
