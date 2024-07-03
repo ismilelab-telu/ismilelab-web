@@ -1,33 +1,32 @@
-import React, { useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { Button } from 'reactstrap';
-import parse from 'html-react-parser';
+import React, { useEffect } from 'react'
+import { useParams, Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { Button } from 'reactstrap'
 import { getArticle } from "@store/api/post"
 
 
 import '@src/assets/scss/landing.scss'
 
-import logo from '@src/assets/images/landing/logo-vertical-resize.png';
-import gradientVector from '@src/assets/images/landing/gradient-landingpage.png';
-import templateFrame from '@src/assets/images/landing/template-frame.png';
-import eyes3D from '@src/assets/images/landing/eyes_3d.png';
-import LatestArticles from './LatestArticles'; // Ensure this is imported if it's used
+import logo from '@src/assets/images/landing/logo-vertical-resize.png'
+// import gradientVector from '@src/assets/images/landing/gradient-landingpage.png'
+// import templateFrame from '@src/assets/images/landing/template-frame.png'
+// import eyes3D from '@src/assets/images/landing/eyes_3d.png'
+import LatestArticles from './LatestArticles' // Ensure this is imported if it's used
 
 const Article = () => {
   const dispatch = useDispatch()
-  const { id } = useParams(); // Retrieve the article ID from the URL
-  // const article = useSelector(state => state.articles.articles.find(article => article.id === parseInt(id)));
+  const { id } = useParams() // Retrieve the article ID from the URL
+  // const article = useSelector(state => state.articles.articles.find(article => article.id === parseInt(id)))
   const { article, isLoading } = useSelector((state) => state.post)
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log(id)
     dispatch(getArticle(id))
 
   }, [])
 
   if (!article) {
-    return <div>No article found.</div>;
+    return <div>No article found.</div>
   }
 
   return (
@@ -83,7 +82,7 @@ const Article = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Article;
+export default Article
