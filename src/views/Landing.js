@@ -3,6 +3,7 @@ import '@src/assets/scss/landing.scss'
 
 import { Button } from 'reactstrap'
 import { Link } from 'react-router-dom'
+import LatestArticles from './LatestArticles';
 
 import logo from '@src/assets/images/landing/logo-vertical-resize.png'
 import gradientVector from '@src/assets/images/landing/gradient-landingpage.png'
@@ -96,6 +97,10 @@ const Landing = () => {
       {/* BACKGROUND GRADIENT */}
       <img src={gradientVector} height={'100%'} className='background-gradientx' alt='Gredient Element' />
 
+      {/* BLOG Page */}
+      {/* Latest Articles Section */}
+      <LatestArticles />
+
       {/* ABOUT US */}
       <div className='about' id='about-lab'>
         {/* IMAGE */}
@@ -112,7 +117,6 @@ const Landing = () => {
         </div>
 
       </div>
-
       {/* ASISTANT */}
       {/* FOOTER */}
       <div className='footer-landing'>
