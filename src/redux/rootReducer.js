@@ -12,8 +12,10 @@ import seelabs from "./api/seelabs"
 import swagger from "./api/swagger"
 import user from "./api/user"
 import codePlayground from "./api/codePlayground"
+import articles from "./api/articles"
 
 const rootReducer = {
+  articles,
   navbar,
   layout,
   module,

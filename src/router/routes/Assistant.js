@@ -14,7 +14,9 @@ import {
   Paperclip,
   Star,
   FileText,
-  Code
+  Code,
+  Edit2,
+  Type
 } from "react-feather"
 
 const HAModuleList = lazy(() => import("../../views/pages/assistant/HomeAssignment/HAModuleList"))
@@ -34,6 +36,9 @@ const InputPreview = lazy(() => import("../../views/pages/assistant/Score/InputP
 const InputOverview = lazy(() => import("../../views/pages/assistant/Score/InputOverview"))
 const UpdateScore = lazy(() => import("../../views/pages/assistant/Score/UpdateScore"))
 const BAP = lazy(() => import("../../views/pages/assistant/BAP/BAP"))
+const Blog = lazy(() => import("../../views/pages/assistant/Blog/Blog"))
+const CreateArticle = lazy(() => import("../../views/pages/assistant/Blog/CreateArticle"))
+const EditArticle = lazy(() => import("../../views/pages/assistant/Blog/EditArticle"))
 const StudentList = lazy(() => import("../../views/pages/assistant/user/StudentList"))
 const ProctorSchedule = lazy(() => import("../../views/pages/assistant/Proctor/Proctor"))
 const HomeDashboard = lazy(() => import("../../views/pages/assistant/user/Home"))
@@ -122,6 +127,18 @@ const AssistantRoutes = [
     element: <BAP />
   },
   {
+    path: "/assistant/blog",
+    element: <Blog />
+  },
+  {
+    path: "/assistant/Blog/create-article",
+    element: <CreateArticle />
+  },
+  {
+    path: "/assistant/Blog/edit-article",
+    element: <EditArticle />
+  },
+  {
     path: "/assistant/code-playground",
     element: <CodePlayground />
   },
@@ -130,7 +147,20 @@ const AssistantRoutes = [
     element: <Swagger />
   }
 ]
-
+// children: [
+//   {
+//     id: 'createArticle',
+//     title: 'Create Article',
+//     icon: <Circle />,
+//     navLink: "/assistant/blog/create-article"
+//   },
+//   {
+//     id: 'editArticle',
+//     title: 'Edit Article',
+//     icon: <Circle />,
+//     navLink: "/assistant/blog/edit-article"
+//   }
+// ]
 export const AssistantMenu = [
   {
     id: "Home",
@@ -250,6 +280,12 @@ export const AssistantMenu = [
     title: "API Docs",
     icon: <Book size={20} />,
     navLink: "/assistant/swagger"
+  },
+  {
+    id: "blog",
+    title: "Blog",
+    icon: <Type size={20} />,
+    navLink: "/assistant/Blog",
   }
 ]
 

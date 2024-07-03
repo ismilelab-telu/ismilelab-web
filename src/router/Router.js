@@ -21,6 +21,7 @@ const Login = lazy(() => import('../views/pages/authentication/Login'))
 const Landing = lazy(() => import("../views/Landing"))
 const Error = lazy(() => import('../views/pages/misc/Error'))
 const NotAuthorized = lazy(() => import('../views/pages/misc/NotAuthorized'))
+const Article = lazy(() => import('../views/Article'));
 
 const Router = () => {
   // ** Hooks
@@ -40,7 +41,10 @@ const Router = () => {
     {
       path: '/',
       element: <BlankLayout />,
-      children: [{ path: '/', element: <Landing /> }]
+      children: [
+        { path: '/', element: <Landing /> },
+        { path: 'articles/:id', element: <Article /> } // New route for ArticlePage
+      ]
     },
     {
       path: '/home',

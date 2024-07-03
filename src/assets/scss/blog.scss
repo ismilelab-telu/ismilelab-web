@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Jost:wght@700&family=Poppins:wght@700&family=Montserrat:wght@400;700&display=swap');
+@import "@styles/react/libs/tables/react-dataTable-component.scss";
+
+// Define the primary colors
+$primary-color: #2FEAA8; // Bright green, can adjust according to your theme
+$danger-color: #FF6347; // Tomato red for delete actions
+$background-color: #fff; // White background for readability
+
+.blog-section {
+  .Card {
+    background: $background-color;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    .CardHeader {
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.03);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+
+      .CardTitle {
+        font-size: 1.25rem;
+        &.text-dark {
+          color: #000;
+        }
+        &.text-light {
+          color: #fff;
+        }
+      }
+
+      button {
+        float: right;
+        margin: -10px 0;
+      }
+    }
+
+    .CardBody {
+      padding: 20px;
+
+      .filter-section {
+        margin-bottom: 1rem;
+        input {
+          width: 100%;
+          padding: 0.375rem 0.75rem;
+          border: 1px solid #ccc;
+          border-radius: 0.25rem;
+        }
+      }
+
+      .dataTable-wrapper {
+        overflow-x: auto; // Ensures responsiveness
+      }
+    }
+  }
+
+  // DataTable styling
+  .DataTable {
+    // Override react-data-table styles if necessary
+    .rdt_TableHeadRow {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .rdt_TableRow {
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+      }
+    }
+
+    .rdt_Pagination {
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  // Tag styling
+  .tag {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    color: #fff;
+    &.ai {
+      background-color: #2FEAA8; // Adjust colors as needed
+    }
+    &.technology {
+      background-color: #FFD700; // Gold for Technology
+    }
+    &.innovation {
+      background-color: #FF6347; // Tomato red for Innovation
+    }
+    &.new {
+      background-color: #4682B4; // Steel blue for New
+    }
+  }
+
+  // Action buttons
+  .action-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+
+    button {
+      flex: 1;
+      border: none;
+      color: #fff;
+      font-weight: bold;
+      padding: 0.375rem 0.75rem;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      transition: background-color 0.15s ease-in-out;
+      text-align: center;
+
+      &.relief-primary {
+        background-color: $primary-color;
+
+        &:hover {
+          background-color: darken($primary-color, 10%);
+        }
+      }
+
+      &.relief-danger {
+        background-color: $danger-color;
+
+        &:hover {
+          background-color: darken($danger-color, 10%);
+        }
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .blog-section {
+    .Card {
+      .CardHeader button {
+        margin-top: 0;
+      }
+    }
+  }
+}
