@@ -23,7 +23,7 @@ const Article = () => {
     console.log(id)
     dispatch(getArticle(id))
 
-  }, [])
+  }, [id])
 
   if (!article) {
     return <div>No article found.</div>

@@ -43,6 +43,7 @@ export const postSlice = createSlice({
           url: "#",
         }));
       })
+      
       .addCase(getArticle.fulfilled, (state, action) => {
         state.article = {
           ...action.payload,
