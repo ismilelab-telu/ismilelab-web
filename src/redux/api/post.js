@@ -23,7 +23,7 @@ export const createArticle = createAsyncThunk("post/createArticle", async (data)
 })
 
 export const deleteArticle = createAsyncThunk("post/deleteArticle", async (id) => {
-  return await axios.delete(`${endpoint}`, { params: id })
+  return await axios.delete(`${endpoint}?id=${id}`);
 })
 
 export const getArticleCategories = createAsyncThunk("post/getArticleCategories", async () => {

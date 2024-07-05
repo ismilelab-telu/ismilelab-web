@@ -1,18 +1,19 @@
+import { useState, useEffect } from "react";
+import { Card, CardHeader, CardTitle, CardBody, Button, Input, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
+import DataTable, { createTheme } from "react-data-table-component";
+import { MoreVertical, FileText, Trash, Edit } from 'react-feather';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { getArticleList, deleteArticle } from "@store/api/post";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
 import "@src/assets/scss/blog.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 
-import { useState, useEffect } from "react";
-import { Card, CardHeader, CardTitle, CardBody, Button, Input, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
-import DataTable, { createTheme } from "react-data-table-component";
-import { MoreVertical, FileText, Archive, Trash, Edit } from 'react-feather';
+const MySwal = withReactContent(Swal);
 
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-
-import { useDispatch, useSelector } from "react-redux"
-import { getArticleList } from "@store/api/post"
-
-// ** Custom Theme for DataTable
 createTheme("dark", {
   background: {
     default: "transparent"
@@ -35,23 +36,16 @@ createTheme("light", {
 
 const Blog = () => {
   const dispatch = useDispatch();
-  const [theme, setTheme] = useState("light"); // Change to "dark" to test dark theme
+  const [theme, setTheme] = useState("light");
   const [filterText, setFilterText] = useState("");
   const { articles, isLoading } = useSelector((state) => state.post);
-  // const filteredArticles = articles.filter(article => activeTab === 'All Items' || article.type === activeTab);
 
   useEffect(() => {
-    dispatch(getArticleList())
-    // console.log(articles);
-  }, [])
+    dispatch(getArticleList());
+  }, [dispatch]);
 
-  // const filteredArticles = articles.filter(article =>
-  //   article.title.toLowerCase().includes(filterText.toLowerCase()) ||
-  //   article.writer.toLowerCase().includes(filterText.toLowerCase()) ||
-  //   article.tag.toLowerCase().includes(filterText.toLowerCase())
-  // );
+  const navigate = useNavigate();
 
-  const navigate = useNavigate(); // Correctly instantiate navigate inside the component
   const columns = [
     {
       name: "Title",
@@ -65,7 +59,7 @@ const Blog = () => {
       sortable: true,
       right: false,
       cell: (row) => (
-        <span >{row.category}</span>
+        <span>{row.category}</span>
       )
     },
     {
@@ -110,16 +104,53 @@ const Blog = () => {
   ];
 
   const handleEdit = (id) => {
-    navigate(`/assistant/blog/edit-article/${id}`); // Navigate to edit page
+    navigate(`/assistant/blog/edit-article/${id}`);
   };
 
-  const handleDelete = (id) => {
-    setArticles(articles.filter(article => article.id !== id));
-    console.log("Delete article", id);
+  const handleDelete = async (id) => {
+    return await MySwal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      customClass: {
+        confirmButton: 'btn btn-primary',
+        cancelButton: 'btn btn-outline-danger ms-1'
+      },
+      buttonsStyling: false
+    }).then(result => {
+      if (result.value) {
+        dispatch(deleteArticle(id))
+        .then(({ payload }) => {
+          console.log(payload)
+          if (payload.status === 200) {
+            MySwal.fire({
+              icon: 'success',
+              title: 'Deleted!',
+              text: 'Your file has been deleted.',
+              customClass: {
+                confirmButton: 'btn btn-success'
+              }
+            });
+            dispatch(getArticleList());
+          } else {
+            MySwal.fire({
+              title: 'Failed',
+              text: 'Something went wrong...',
+              icon: 'error',
+              customClass: {
+                confirmButton: 'btn btn-success'
+              }
+            });
+          }
+        });
+      }
+    });
   };
 
   const handleCreate = () => {
-    navigate('/assistant/blog/create-article'); // Navigate to create page
+    navigate('/assistant/blog/create-article');
   };
 
   return (
@@ -141,7 +172,7 @@ const Blog = () => {
           noHeader
           data={articles}
           columns={columns}
-          progressPending={false} 
+          progressPending={isLoading}
           theme={theme}
           pagination
         />
