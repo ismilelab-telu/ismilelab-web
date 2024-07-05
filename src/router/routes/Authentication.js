@@ -1,18 +1,28 @@
 // ** React Imports
-import { lazy } from 'react'
+import { lazy } from "react";
 
-const Login = lazy(() => import('../../views/pages/authentication/Login'))
+const Login = lazy(() => import("../../views/pages/authentication/Login"));
+const ForgotPassword = lazy(() => import("../../views/ForgotPassword"));
 
 const AuthenticationRoutes = [
   {
-    path: '/login',
+    path: "/login",
     element: <Login />,
     meta: {
-      layout: 'blank',
+      layout: "blank",
       publicRoute: true,
-      restricted: true
-    }
-  }
-]
+      restricted: true,
+    },
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword />,
+    meta: {
+      layout: "blank",
+      publicRoute: true,
+      restricted: true,
+    },
+  },
+];
 
-export default AuthenticationRoutes
+export default AuthenticationRoutes;
