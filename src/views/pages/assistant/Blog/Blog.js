@@ -9,6 +9,9 @@ import { MoreVertical, FileText, Archive, Trash, Edit } from 'react-feather';
 
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
+import { useDispatch, useSelector } from "react-redux"
+import { getArticleList } from "@store/api/post"
+
 // ** Custom Theme for DataTable
 createTheme("dark", {
   background: {
@@ -31,24 +34,23 @@ createTheme("light", {
 });
 
 const Blog = () => {
+  const dispatch = useDispatch();
   const [theme, setTheme] = useState("light"); // Change to "dark" to test dark theme
   const [filterText, setFilterText] = useState("");
-  const [articles, setArticles] = useState([
-    { id: 1, title: "OPEN AI announces A state-of-the-art LLM, OPEN AI GPT-4", date: "2023-06-20", tag: "News", writer: "John Doe" },
-    { id: 2, title: "How mobile phone networks are embracing AI", date: "2024-06-12", tag: "Tutorials", writer: "Jane Smith" },
-    { id: 3, title: "Computers built like brains could be a ‘competition killer’", date: "2024-06-22", tag: "News", writer: "Alice Johnson" }
-  ]);
+  const { articles, isLoading } = useSelector((state) => state.post);
+  // const filteredArticles = articles.filter(article => activeTab === 'All Items' || article.type === activeTab);
 
-  // Simulate fetching data
   useEffect(() => {
-    console.log("Articles fetched", articles);
-  }, [articles]);
+    dispatch(getArticleList())
+    // console.log(articles);
+  }, [])
 
-  const filteredArticles = articles.filter(article =>
-    article.title.toLowerCase().includes(filterText.toLowerCase()) ||
-    article.writer.toLowerCase().includes(filterText.toLowerCase()) ||
-    article.tag.toLowerCase().includes(filterText.toLowerCase())
-  );
+  // const filteredArticles = articles.filter(article =>
+  //   article.title.toLowerCase().includes(filterText.toLowerCase()) ||
+  //   article.writer.toLowerCase().includes(filterText.toLowerCase()) ||
+  //   article.tag.toLowerCase().includes(filterText.toLowerCase())
+  // );
+
   const navigate = useNavigate(); // Correctly instantiate navigate inside the component
   const columns = [
     {
@@ -58,17 +60,17 @@ const Blog = () => {
       wrap: true
     },
     {
-      name: "Tag",
-      selector: (row) => row.tag,
+      name: "Category",
+      selector: (row) => row.category,
       sortable: true,
       right: false,
       cell: (row) => (
-        <span className={`tag ${row.tag.toLowerCase()}`}>{row.tag}</span>
+        <span >{row.category}</span>
       )
     },
     {
-      name: "Writer",
-      selector: (row) => row.writer,
+      name: "Author",
+      selector: (row) => row.author,
       sortable: true
     },
     {
@@ -137,9 +139,9 @@ const Blog = () => {
         </div>
         <DataTable
           noHeader
-          data={filteredArticles}
+          data={articles}
           columns={columns}
-          progressPending={false}
+          progressPending={false} 
           theme={theme}
           pagination
         />
