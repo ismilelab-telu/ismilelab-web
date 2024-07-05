@@ -43,7 +43,7 @@ const Router = () => {
       element: <BlankLayout />,
       children: [
         { path: '/', element: <Landing /> },
-        { path: 'articles/:id', element: <Article /> } // New route for ArticlePage
+        { path: 'article/:id', element: <Article /> } // New route for ArticlePage
       ]
     },
     {
