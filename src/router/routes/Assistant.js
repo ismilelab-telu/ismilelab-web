@@ -127,7 +127,7 @@ const AssistantRoutes = [
     element: <BAP />
   },
   {
-    path: "/assistant/blog",
+    path: "/assistant/article",
     element: <Blog />
   },
   {
@@ -276,16 +276,16 @@ export const AssistantMenu = [
     navLink: "/assistant/code-playground"
   },
   {
+    id: "blog",
+    title: "Blog",
+    icon: <Type size={20} />,
+    navLink: "/assistant/article"
+  },
+  {
     id: "swagger",
     title: "API Docs",
     icon: <Book size={20} />,
     navLink: "/assistant/swagger"
-  },
-  {
-    id: "blog",
-    title: "Blog",
-    icon: <Type size={20} />,
-    navLink: "/assistant/Blog",
   }
 ]
 

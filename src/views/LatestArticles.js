@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { getArticleList } from "@store/api/post"
 import { Link } from 'react-router-dom'
@@ -11,7 +11,7 @@ const ArticleTabs = ({ activeTab, setActiveTab }) => (
       </button>
     ))}
   </div>
-);
+)
 
 const ArticleCard = ({ article }) => (
   <div className="article-card">
@@ -34,14 +34,14 @@ const ArticleCard = ({ article }) => (
       </div>
     </div>
   </div>
-);
+)
 
 const LatestArticles = () => {
-  const dispatch = useDispatch();
-  const [activeTab, setActiveTab] = useState('All Items');
+  const dispatch = useDispatch()
+  const [activeTab, setActiveTab] = useState('All Items')
   // const articles = useSelector(state => state.articles.articles);  // Use articles from Redux
-  const { articles, isLoading } = useSelector((state) => state.post);
-  const filteredArticles = articles.filter(article => activeTab === 'All Items' || article.type === activeTab);
+  const { articles, isLoading } = useSelector((state) => state.post)
+  const filteredArticles = articles.filter(article => activeTab === 'All Items' || article.type === activeTab)
 
   useEffect(() => {
     dispatch(getArticleList())
@@ -62,7 +62,7 @@ const LatestArticles = () => {
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default LatestArticles;
+export default LatestArticles
