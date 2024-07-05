@@ -1,6 +1,18 @@
-import React, { useState } from 'react';
-import { Card, CardHeader, CardTitle, CardBody, Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
+import React, { useState } from "react";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardBody,
+  Col,
+  Row,
+  Button,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+} from "reactstrap";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
 import {
   ClassicEditor,
   AccessibilityHelp,
@@ -52,54 +64,76 @@ import {
   TextTransformation,
   TodoList,
   Underline,
-  Undo
-} from 'ckeditor5';
-import 'ckeditor5/ckeditor5.css';
+  Undo,
+} from "ckeditor5";
+import "ckeditor5/ckeditor5.css";
+
+import { Controller, useForm } from "react-hook-form";
 
 const CreateArticle = () => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [tag, setTag] = useState('');
-  const [writer, setWriter] = useState('');
+  const [title, setTitle] = useState("");
+  const [summary, setSummary] = useState("");
+
+  const [category, setCategory] = useState("");
+  const [content, setContent] = useState("");
+  const [writer, setWriter] = useState("");
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  // INI GIMANAAA??
+  const onSubmit = (data) => {
+    // dispatch(addAnswer({ ...data, file: data.file[0] })).then(
+    //   ({ payload: { status } }) => {
+    //     if (status === 200) {
+    //       navigate("/student/journal"); // YANG INI JUGA?!
+    //     }
+    //   }
+    // );
+    console.log(data)
+  };
 
   const handleSave = () => {
     const newArticle = {
       title,
       content,
-      tag,
+      category,
       writer,
       date: new Date().toISOString().substring(0, 10),
     };
-    console.log('Article saved:', newArticle);
+    console.log("Article saved:", newArticle);
     // You can also send this data to your backend server for persistent storage
   };
 
   const editorConfig = {
     toolbar: {
       items: [
-        'undo',
-        'redo',
-        '|',
-        'heading',
-        '|',
-        'bold',
-        'italic',
-        'underline',
-        '|',
-        'link',
-        'insertImageViaUrl',
-        'insertTable',
-        'highlight',
-        'blockQuote',
-        'codeBlock',
-        '|',
-        'bulletedList',
-        'numberedList',
-        'todoList',
-        'indent',
-        'outdent'
+        "undo",
+        "redo",
+        "|",
+        "heading",
+        "|",
+        "bold",
+        "italic",
+        "underline",
+        "|",
+        "link",
+        "insertImageViaUrl",
+        "insertTable",
+        "highlight",
+        "blockQuote",
+        "codeBlock",
+        "|",
+        "bulletedList",
+        "numberedList",
+        "todoList",
+        "indent",
+        "outdent",
       ],
-      shouldNotGroupWhenFull: false
+      shouldNotGroupWhenFull: false,
     },
     plugins: [
       AccessibilityHelp,
@@ -151,57 +185,116 @@ const CreateArticle = () => {
       TextTransformation,
       TodoList,
       Underline,
-      Undo
+      Undo,
     ],
-    balloonToolbar: ['bold', 'italic', '|', 'link', '|', 'bulletedList', 'numberedList'],
-    blockToolbar: ['bold', 'italic', '|', 'link', 'insertTable', '|', 'bulletedList', 'numberedList', 'indent', 'outdent'],
+    balloonToolbar: [
+      "bold",
+      "italic",
+      "|",
+      "link",
+      "|",
+      "bulletedList",
+      "numberedList",
+    ],
+    blockToolbar: [
+      "bold",
+      "italic",
+      "|",
+      "link",
+      "insertTable",
+      "|",
+      "bulletedList",
+      "numberedList",
+      "indent",
+      "outdent",
+    ],
     heading: {
       options: [
-        { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
-        { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
-        { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
-        { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
-        { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
-        { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
-        { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
-      ]
+        {
+          model: "paragraph",
+          title: "Paragraph",
+          class: "ck-heading_paragraph",
+        },
+        {
+          model: "heading1",
+          view: "h1",
+          title: "Heading 1",
+          class: "ck-heading_heading1",
+        },
+        {
+          model: "heading2",
+          view: "h2",
+          title: "Heading 2",
+          class: "ck-heading_heading2",
+        },
+        {
+          model: "heading3",
+          view: "h3",
+          title: "Heading 3",
+          class: "ck-heading_heading3",
+        },
+        {
+          model: "heading4",
+          view: "h4",
+          title: "Heading 4",
+          class: "ck-heading_heading4",
+        },
+        {
+          model: "heading5",
+          view: "h5",
+          title: "Heading 5",
+          class: "ck-heading_heading5",
+        },
+        {
+          model: "heading6",
+          view: "h6",
+          title: "Heading 6",
+          class: "ck-heading_heading6",
+        },
+      ],
     },
     image: {
       toolbar: [
-        'toggleImageCaption',
-        'imageTextAlternative',
-        '|',
-        'imageStyle:inline',
-        'imageStyle:wrapText',
-        'imageStyle:breakText',
-        '|',
-        'resizeImage'
-      ]
+        "toggleImageCaption",
+        "imageTextAlternative",
+        "|",
+        "imageStyle:inline",
+        "imageStyle:wrapText",
+        "imageStyle:breakText",
+        "|",
+        "resizeImage",
+      ],
     },
     link: {
       addTargetToExternalLinks: true,
-      defaultProtocol: 'https://',
+      defaultProtocol: "https://",
       decorators: {
         toggleDownloadable: {
-          mode: 'manual',
-          label: 'Downloadable',
+          mode: "manual",
+          label: "Downloadable",
           attributes: {
-            download: 'file'
-          }
-        }
-      }
+            download: "file",
+          },
+        },
+      },
     },
     list: {
       properties: {
         styles: true,
         startIndex: true,
-        reversed: true
-      }
+        reversed: true,
+      },
     },
-    placeholder: 'Type or paste your content here!',
+    placeholder: "Type or paste your content here!",
     table: {
-      contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties', 'tableCellProperties']
-    }
+      contentToolbar: [
+        "tableColumn",
+        "tableRow",
+        "mergeTableCells",
+        "tableProperties",
+        "tableCellProperties",
+      ],
+    },
   };
 
   return (
@@ -210,29 +303,62 @@ const CreateArticle = () => {
         <CardTitle tag="h4">Create New Article</CardTitle>
       </CardHeader>
       <CardBody>
-        <Form>
-          <FormGroup>
-            <Label for="title">Title</Label>
-            <Input
-              type="text"
-              id="title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label for="tag">Tag</Label>
-            <Input
-              type="select"
-              id="tag"
-              value={tag}
-              onChange={(e) => setTag(e.target.value)}
-            >
-              <option value="New">News</option>
-              <option value="Announcement">Announcements</option>
-              <option value="Tutorial">Tutorials</option>
-            </Input>
-          </FormGroup>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <Row md={3}>
+            <FormGroup>
+              <Label for="title">Title</Label>
+              <Controller
+                name="title"
+                control={control}
+                defaultValue={""}
+                rules={{ required: "Isi judulnya!", minLength: 1 }}
+                render={({ field }) => (
+                  <Input
+                    type="text"
+                    id="title"
+                    // value={title}
+                    // onChange={(e) => setTitle(e.target.value)}
+                    invalid={errors.title && true}
+                    {...field}
+                  />
+                )}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="category">Category</Label>
+              <Controller
+                name="category"
+                control={control}
+                defaultValue={"New"}
+                render={({ field }) => (
+                  <Input
+                    type="select"
+                    id="category"
+                    // value={category}
+                    // onChange={(e) => setCategory(e.target.value)}
+                    invalid={errors.title && true}
+                    {...field}
+                  >
+                    <option value="New">News</option>
+                    <option value="Announcement">Announcements</option>
+                    <option value="Tutorial">Tutorials</option>
+                  </Input>
+                )}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="uploadThumbnail">Upload Thumbnail</Label>
+              <Controller
+                name="uploadThumbnail"
+                control={control}
+                defaultValue={[]}
+                render={({ field }) => (
+                  <Input type="file" id="inputFile" {...field} />
+                )}
+              />
+            </FormGroup>
+          </Row>
+
           {/* <FormGroup>
             <Label for="writer">Writer</Label>
             <Input
@@ -242,19 +368,49 @@ const CreateArticle = () => {
               onChange={(e) => setWriter(e.target.value)}
             />
           </FormGroup> */}
+
           <FormGroup>
-            <Label for="content">Content</Label>
-            <CKEditor
-              editor={ClassicEditor}
-              config={editorConfig}
-              data={content}
-              onChange={(event, editor) => {
-                const data = editor.getData();
-                setContent(data);
-              }}
+            <Label for="summary">Summary</Label>
+            <Controller
+              name="summary"
+              control={control}
+              rules={{ required: "Summary-nya di isi", minLength: 1 }}
+              render={({ field }) => (
+                <Input
+                  type="textarea"
+                  id="summary"
+                  // value={title}
+                  // onChange={(e) => setSummary(e.target.value)}
+                  invalid={errors.summary && true}
+                  {...field}
+                />
+              )}
             />
           </FormGroup>
-          <Button color="primary" onClick={handleSave}>Save Article</Button>
+          <FormGroup>
+            <Label for="content">Content</Label>
+            <Controller
+            name="content"
+            control={control}
+            rules={{required:"Content-nya di isi!", minLength: 1}}
+              render={({ field }) => (
+                <CKEditor
+                  editor={ClassicEditor}
+                  config={editorConfig}
+                  data={content}
+                  // onChange={(event, editor) => {
+                  //   const data = editor.getData();
+                  //   setContent(data);
+                  // }}
+                  invalid={errors.content && true}
+                  {...field}
+                />
+              )}
+            />
+          </FormGroup>
+          <Button color="primary" onClick={handleSave}>
+            Save Article
+          </Button>
         </Form>
       </CardBody>
     </Card>
