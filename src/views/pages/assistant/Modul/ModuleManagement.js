@@ -6,7 +6,7 @@ import Avatar from '@components/avatar';
 import Breadcrumbs from '@components/breadcrumbs';
 
 // ** Icons Imports
-import { Edit2, PlusSquare, MoreVertical, Trash, X} from 'react-feather';
+import { Edit2, PlusSquare, MoreVertical, Trash, X } from 'react-feather';
 
 // ** Reactstrap Imports
 import {
@@ -26,15 +26,15 @@ import {
   Label,
   FormGroup,
   Input
-} from "reactstrap";
+} from 'reactstrap';
 
 // ** Store & Actions
 import { useDispatch, useSelector } from 'react-redux';
 import { selectModule, getModules, createModule, updateModule, deleteModule } from '@store/api/module';
 
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
-const MySwal = withReactContent(Swal)
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+const MySwal = withReactContent(Swal);
 
 // ** Styles
 import '@src/assets/scss/module-list.scss';
@@ -42,7 +42,7 @@ import '@src/assets/scss/module-list.scss';
 const ModuleManagement = () => {
   // ** Store Vars
   const dispatch = useDispatch();
-  const { modules, isLoading } = useSelector(state => state.module);
+  const { modules, isLoading } = useSelector((state) => state.module);
 
   const [modalAdd, setModalAdd] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);
@@ -59,8 +59,7 @@ const ModuleManagement = () => {
     dispatch(getModules());
   }, [dispatch]);
 
-
-  const handleDelete = async id => {
+  const handleDelete = async (id) => {
     return await MySwal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -72,9 +71,9 @@ const ModuleManagement = () => {
         cancelButton: 'btn btn-outline-danger ms-1'
       },
       buttonsStyling: false
-    }).then(result => {
-      if (result.value) {
-        dispatch(deleteModule({id})).then(({payload}) => {
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteModule({ id })).then(({ payload }) => {
           if (payload.status === 200) {
             MySwal.fire({
               icon: 'success',
@@ -83,11 +82,11 @@ const ModuleManagement = () => {
               customClass: {
                 confirmButton: 'btn btn-success'
               }
-            })
-            dispatch(getModules())
+            });
+            dispatch(getModules());
           } else {
-            console.log(payload.status)
-            console.log(payload)
+            console.log(payload.status);
+            console.log(payload);
             MySwal.fire({
               title: 'Failed',
               text: 'Something wrong...',
@@ -95,14 +94,13 @@ const ModuleManagement = () => {
               customClass: {
                 confirmButton: 'btn btn-success'
               }
-            })
-            dispatch(getModules())
+            });
+            dispatch(getModules());
           }
-        })
+        });
       }
-    })
-  }
-
+    });
+  };
 
   const renderListModule = () => {
     if (modules?.length > 0) {
@@ -112,10 +110,12 @@ const ModuleManagement = () => {
             <div className='d-flex'>
               <Avatar className='rounded' color='light-info' content={(index + 1).toString()} />
               <div>
-                <h6 className='module-title'>Module {index + 1} : {item.name}</h6>
+                <h6 className='module-title'>
+                  Module {index + 1} : {item.name}
+                </h6>
               </div>
             </div>
-            <div style={{ display: "flex", flexDirection: "row", alignItems: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
               <div className='d-flex'>
                 <UncontrolledDropdown>
                   <DropdownToggle color='relief-primary'>
@@ -126,19 +126,18 @@ const ModuleManagement = () => {
                       tag='a'
                       href='#'
                       className='w-100'
-                      onClick={e => {
+                      onClick={(e) => {
                         e.preventDefault();
                         setupdateModuleData(item);
                         setModuleName(item.name);
-                        setModuleNumber(modules.findIndex(mod => mod.id === item.id) + 1);
+                        setModuleNumber(item.seelabsId);
                         toggleModalEdit();
                       }}
                     >
                       <Edit2 size={15} />
                       <span className='align-middle ms-50'>Edit</span>
                     </DropdownItem>
-                    {/* <DropdownItem tag='a' href='#' className='w-100' onClick={() =>  handleDelete(item.id) }> */}
-                    <DropdownItem tag='a' href='#' className='w-100' onClick={() =>  {handleDelete(item.id) }}>
+                    <DropdownItem tag='a' href='#' className='w-100' onClick={() => handleDelete(item.id)}>
                       <Trash size={15} />
                       <span className='align-middle ms-50'>Delete</span>
                     </DropdownItem>
@@ -150,9 +149,7 @@ const ModuleManagement = () => {
         );
       });
     } else {
-      return (
-        <div>No data available</div>
-      );
+      return <div>No data available</div>;
     }
   };
 
@@ -162,10 +159,7 @@ const ModuleManagement = () => {
       <Card className='card-module'>
         <CardHeader>
           <CardTitle tag='h4'>Module List</CardTitle>
-          <Button
-            color='relief-success'
-            onClick={toggleModalAdd}
-          >
+          <Button color='relief-success' onClick={toggleModalAdd}>
             <PlusSquare size={15} />
             <span className='align-left ms-25'>Add</span>
           </Button>
@@ -173,7 +167,7 @@ const ModuleManagement = () => {
         <CardBody>{renderListModule()}</CardBody>
       </Card>
 
-      <Modal isOpen={modalAdd} toggle={toggleModalAdd} className="modal-dialog-centered">
+      <Modal isOpen={modalAdd} toggle={toggleModalAdd} className='modal-dialog-centered'>
         <ModalHeader toggle={toggleModalAdd}>Add New Module</ModalHeader>
         <ModalBody>
           <FormGroup>
@@ -183,7 +177,7 @@ const ModuleManagement = () => {
               id='seelabsId'
               placeholder='Enter Module Number'
               value={seelabsId}
-              onChange={e => setSeelabsId(parseInt(e.target.value))}
+              onChange={(e) => setSeelabsId(parseInt(e.target.value))}
             />
             <Label for='moduleName'>Module Name</Label>
             <Input
@@ -191,20 +185,21 @@ const ModuleManagement = () => {
               id='moduleName'
               placeholder='Enter module name'
               value={moduleNameAdd}
-              onChange={e => setModuleNameAdd(e.target.value)}
+              onChange={(e) => setModuleNameAdd(e.target.value)}
             />
           </FormGroup>
         </ModalBody>
         <ModalFooter>
-          <Button color='primary'
+          <Button
+            color='primary'
             onClick={async () => {
               const newModule = {
                 seelabsId,
-                name: moduleNameAdd,
+                name: moduleNameAdd
               };
 
               await dispatch(createModule(newModule));
-              dispatch(getModules());  // Fetch new data after saving
+              dispatch(getModules()); // Fetch new data after saving
               toggleModalAdd();
               setModuleNameAdd(''); // Reset state
               setSeelabsId('');
@@ -212,21 +207,25 @@ const ModuleManagement = () => {
           >
             Save
           </Button>
-          <Button color='secondary' onClick={toggleModalAdd}>Cancel</Button>
+          <Button color='secondary' onClick={toggleModalAdd}>
+            Cancel
+          </Button>
         </ModalFooter>
       </Modal>
 
-      <Modal isOpen={modalEdit} toggle={toggleModalEdit} className="modal-dialog-centered">
-      <ModalHeader toggle={toggleModalEdit}  close={null}>Edit Module</ModalHeader>
+      <Modal isOpen={modalEdit} toggle={toggleModalEdit} className='modal-dialog-centered'>
+        <ModalHeader toggle={toggleModalEdit} close={null}>
+          Edit Module
+        </ModalHeader>
         <ModalBody>
           <FormGroup>
-          <Label for='updateModuleNumber'>Seelabs ID</Label>
+            <Label for='updateModuleNumber'>Module Number</Label>
             <Input
-              type='number'
+              type='text'
               id='updateModuleNumber'
-              placeholder='Enter Module Numebr'
+              placeholder='Enter Module Number'
               value={moduleNumber}
-              onChange={e => setSeelabsId(e.target.value)}
+              onChange={(e) => setModuleNumber(e.target.value)}
             />
             <Label for='updateModuleName'>Module Name</Label>
             <Input
@@ -234,7 +233,7 @@ const ModuleManagement = () => {
               id='updateModuleName'
               placeholder='Enter module name'
               value={moduleName}
-              onChange={e => setModuleName(e.target.value)}
+              onChange={(e) => setModuleName(e.target.value)}
             />
           </FormGroup>
         </ModalBody>
@@ -244,7 +243,7 @@ const ModuleManagement = () => {
             onClick={async () => {
               const updatedModule = {
                 id: updateModuleData.id,
-                seelabsId: seelabsId,
+                seelabsId: moduleNumber,
                 name: moduleName
               };
 
@@ -258,8 +257,9 @@ const ModuleManagement = () => {
           >
             Save
           </Button>
-
-          <Button color='secondary' onClick={toggleModalEdit}>Cancel</Button>
+          <Button color='secondary' onClick={toggleModalEdit}>
+            Cancel
+          </Button>
         </ModalFooter>
       </Modal>
     </Fragment>
