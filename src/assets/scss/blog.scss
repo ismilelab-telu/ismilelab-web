@@ -89,7 +89,13 @@ $background-color: #fff; // White background for readability
       background-color: #4682B4; // Steel blue for New
     }
   }
-
+  .action-icons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+  }
+  
   // Action buttons
   .action-buttons {
     display: flex;
