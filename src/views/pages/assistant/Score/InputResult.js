@@ -168,7 +168,7 @@ const InputResult = () => {
                 classNamePrefix='select'
                 options={moduleOptions}
                 value={currentModule}
-                disabled={isLoading || isSubmitLoading}
+                isDisabled={isLoading || isSubmitLoading}
                 onChange={(selectedOption) => {
                   dispatch(getInputResult({ module: selectedOption.value }))
                   dispatch(setModule(selectedOption))
