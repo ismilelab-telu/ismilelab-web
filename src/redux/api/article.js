@@ -4,37 +4,37 @@ import axios from "axios"
 // ** Redux Imports
 import { createSlice, createAsyncThunk, isAnyOf } from "@reduxjs/toolkit"
 
-const endpoint = "/post"
+const endpoint = "/article"
 
-export const getArticleList = createAsyncThunk("post/getArticleList", async () => {
+export const getArticleList = createAsyncThunk("article/getArticleList", async () => {
   return await axios.get(`${endpoint}/list`).then((res) => {
     return res.data.data
   })
 })
 
-export const getArticle = createAsyncThunk("post/getArticle", async (id) => {
+export const getArticle = createAsyncThunk("article/getArticle", async (id) => {
   return await axios.get(`${endpoint}/${id}`).then((res) => {
     return res.data.data
   })
 })
 
-export const createArticle = createAsyncThunk("post/createArticle", async (data) => {
+export const createArticle = createAsyncThunk("article/createArticle", async (data) => {
   return await axios.postForm(endpoint, data)
 })
 
-export const deleteArticle = createAsyncThunk("post/deleteArticle", async (id) => {
-  return await axios.delete(`${endpoint}?id=${id}`);
+export const deleteArticle = createAsyncThunk("article/deleteArticle", async (id) => {
+  return await axios.delete(endpoint, { params: id })
 })
 
-export const getArticleCategories = createAsyncThunk("post/getArticleCategories", async () => {
+export const getArticleCategories = createAsyncThunk("article/getArticleCategories", async () => {
   return await axios.get(`${endpoint}-category/list`).then((res) => {
     return res.data.data
   })
 })
 
 
-export const postSlice = createSlice({
-  name: "post",
+export const articleSlice = createSlice({
+  name: "article",
   initialState: {
     isLoading: false,
     articles: [],
@@ -102,6 +102,6 @@ export const postSlice = createSlice({
   }
 })
 
-export const { } = postSlice.actions
+export const { } = articleSlice.actions
 
-export default postSlice.reducer
+export default articleSlice.reducer

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Button } from 'reactstrap'
-import { getArticle } from "@store/api/post"
+import { getArticle } from "@store/api/article"
 
 
 import '@src/assets/scss/landing.scss'
@@ -17,7 +17,7 @@ const Article = () => {
   const dispatch = useDispatch()
   const { id } = useParams() // Retrieve the article ID from the URL
   // const article = useSelector(state => state.articles.articles.find(article => article.id === parseInt(id)))
-  const { article, isLoading } = useSelector((state) => state.post)
+  const { article, isLoading } = useSelector((state) => state.article)
 
   useEffect(() => {
     console.log(id)

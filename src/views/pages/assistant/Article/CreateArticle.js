@@ -8,7 +8,7 @@ import { ClassicEditor, AccessibilityHelp, Autoformat, AutoImage, AutoLink, Auto
 import "ckeditor5/ckeditor5.css"
 
 import { useDispatch, useSelector } from "react-redux"
-import { getArticleCategories, createArticle } from "@store/api/post"
+import { getArticleCategories, createArticle } from "@store/api/article"
 
 import { useNavigate } from "react-router-dom"
 import { Controller, useForm } from "react-hook-form"
@@ -18,7 +18,7 @@ const CreateArticle = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const { categories, isLoading } = useSelector((state) => state.post)
+  const { categories, isLoading } = useSelector((state) => state.article)
   const { idAssistant } = getUserData()
 
   const defaultValues = {
@@ -48,7 +48,7 @@ const CreateArticle = () => {
     })).then(
       ({ payload: { status } }) => {
         if (status === 200) {
-          navigate("/assistant/article")
+          navigate("/assistant/article-list")
         }
       }
     )

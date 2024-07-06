@@ -36,9 +36,9 @@ const InputPreview = lazy(() => import("../../views/pages/assistant/Score/InputP
 const InputOverview = lazy(() => import("../../views/pages/assistant/Score/InputOverview"))
 const UpdateScore = lazy(() => import("../../views/pages/assistant/Score/UpdateScore"))
 const BAP = lazy(() => import("../../views/pages/assistant/BAP/BAP"))
-const Blog = lazy(() => import("../../views/pages/assistant/Blog/Blog"))
-const CreateArticle = lazy(() => import("../../views/pages/assistant/Blog/CreateArticle"))
-const EditArticle = lazy(() => import("../../views/pages/assistant/Blog/EditArticle"))
+const ArticleList = lazy(() => import("../../views/pages/assistant/Article/ArticleList"))
+const CreateArticle = lazy(() => import("../../views/pages/assistant/Article/CreateArticle"))
+const EditArticle = lazy(() => import("../../views/pages/assistant/Article/EditArticle"))
 const StudentList = lazy(() => import("../../views/pages/assistant/user/StudentList"))
 const ProctorSchedule = lazy(() => import("../../views/pages/assistant/Proctor/Proctor"))
 const HomeDashboard = lazy(() => import("../../views/pages/assistant/user/Home"))
@@ -127,15 +127,15 @@ const AssistantRoutes = [
     element: <BAP />
   },
   {
-    path: "/assistant/article",
-    element: <Blog />
+    path: "/assistant/article-list",
+    element: <ArticleList />
   },
   {
-    path: "/assistant/Blog/create-article",
+    path: "/assistant/article/create-article",
     element: <CreateArticle />
   },
   {
-    path: "/assistant/Blog/edit-article",
+    path: "/assistant/article/edit-article",
     element: <EditArticle />
   },
   {
@@ -276,10 +276,10 @@ export const AssistantMenu = [
     navLink: "/assistant/code-playground"
   },
   {
-    id: "blog",
-    title: "Blog",
+    id: "article",
+    title: "Article",
     icon: <Type size={20} />,
-    navLink: "/assistant/article"
+    navLink: "/assistant/article-list"
   },
   {
     id: "swagger",
