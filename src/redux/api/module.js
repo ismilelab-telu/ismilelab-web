@@ -79,6 +79,37 @@ export const setJStatus = createAsyncThunk(
   }
 )
 
+export const createModule = createAsyncThunk(
+  "module/createModule",
+  async (param) => {
+    return await axios.post(`${endpoint}`, param).then((res) => {
+      return res.data.data
+    })
+  }
+)
+
+export const getModulesByID = createAsyncThunk(
+  "module/getModulesByID",
+   async () => {
+  return await axios.get(`${endpoint}`).then((res) => {
+    return res.data.data
+  })
+})
+
+export const updateModule = createAsyncThunk(
+  "module/updateModule",
+   async (id,seelabsId,name) => {
+  return await axios.put(`${endpoint}`,id,seelabsId,name).then((res) => {
+    return res.data.data
+  })
+})
+
+
+  export const deleteModule = createAsyncThunk("module/deleteModule", async (id) => {
+    return await axios.delete(endpoint, { params: id })
+  })
+
+
 const initialSelectedModule = () => {
   const item = window.localStorage.getItem("selectedModule")
   return item ? JSON.parse(item) : {}
