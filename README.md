@@ -1,9 +1,13 @@
 # Konfigurasi VPS untuk Website Sealab
+
 Berikut adalah langkah-langkah untuk mengkonfigurasi Virtual Private Server (VPS) untuk menjalankan website Sealab.
+
 > Pastikan API sudah dikonfigurasi sebelumnya.
 
 ## Instalasi Node.js
+
 > Node.js yang di instal harus versi **^18.x**
+
 ```bash
 sudo apt-get install -y ca-certificates curl gnupg
 sudo mkdir -p /etc/apt/keyrings
@@ -12,14 +16,18 @@ NODE_MAJOR=18
 echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
 sudo apt-get install nodejs
 ```
+
 setelah instalasi ketik `node -v` dan pastikan versi sudah **^18.x**
 
 ## Instalasi npm dan Yarn
+
 Untuk website ini `yarn` lebih direkomendasikan sebagai package manager dibanding `npm`
+
 ```
 sudo apt-get install npm
 npm install --global yarn
 ```
+
 setelah install ketik `yarn -v` untuk memeriksa apakah `yarn` sudah terinstall
 
 Buat file konfigurasi baru untuk situs web di `/etc/nginx/sites-available` dengan nama `sealab-telu.com` lalu isi dengan kode berikut
@@ -34,21 +42,60 @@ server {
     }
 }
 ```
+
 Aktifkan konfigurasi dengan membuat link simbolis ke direktori `/etc/nginx/sites-enabled` dengan kode berikut
-``` bash
+
+```bash
 ln -s /etc/nginx/sites-available/sealab-telu.com /etc/nginx/sites-enabled/
 ```
 
 ## Menjalankan aplikasi
+
 Gunakan terminal multiplexer seperti `tmux` untuk menjalankan website secara terus menerus:
+
 ```bash
 tmux new -s sea-web
 tmux a -t sea-web
 cd sealab-web
 ```
+
 Sebelum menjalankan aplikasi setting dulu `.env` sesuai dengan contoh di `.env.example` kemudian untuk menjalankan web ketik:
 
 ```bash
 chmod +x deploy.sh
 ./deploy.sh
 ```
+
+## Docker
+
+Docker image untuk web menggunakan `nginx` untuk mode `production` dan `vite preview` untuk mode `preview`.
+
+### Build
+
+Perintah untuk membuat docker image untuk production dan preview adalah di bawah ini.
+
+* Production
+
+  ```bash
+  $ docker build --no-cache -t <DOCKER_REPO>/ismile-web:production .
+  ```
+* Preview
+
+  ```bash
+  $ docker build --no-cache -f Dockerfile.preview -t <DOCKER_REPO>/ismile-web:preview .
+  ```
+
+### Run
+
+Perintah untuk menjalankan docker image untuk production dan preview adalah di bawah ini.
+
+* Production
+
+  ```bash
+  $ docker run --rm -it -p 4567:8080 -e VITE_API_BASE_URL=<API_URL> <DOCKER_REPO>/ismile-web:production
+  ```
+* Preview
+
+  ```bash
+  $ docker run --rm -it -p 4173:4173 <DOCKER_REPO>/ismile-web:preview
+  ```
