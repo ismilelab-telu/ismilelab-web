@@ -1,0 +1,11 @@
+FROM node:18-alpine AS build
+
+WORKDIR /usr/web/ismile
+
+COPY . .
+
+RUN yarn install
+
+RUN yarn build
+
+CMD [ "yarn", "preview", "--host", "0.0.0.0" ]
