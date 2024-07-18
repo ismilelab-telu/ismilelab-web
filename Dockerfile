@@ -6,6 +6,8 @@ COPY . .
 
 RUN yarn install
 
+ENV SKIP_PREFLIGHT_CHECK=true
+
 RUN yarn build
 
 FROM nginx:alpine
