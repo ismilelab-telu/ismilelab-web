@@ -44,6 +44,7 @@ const ProctorSchedule = lazy(() => import("../../views/pages/assistant/Proctor/P
 const HomeDashboard = lazy(() => import("../../views/pages/assistant/user/Home"))
 const Swagger = lazy(() => import("../../views/pages/assistant/Swagger/Swagger"))
 const CodePlayground = lazy(() => import('../../views/CodePlayground'))
+const ModuleManagement= lazy(() => import('../../views/pages/assistant/modul/ModuleManagement'))
 
 const AssistantRoutes = [
   {
@@ -145,7 +146,13 @@ const AssistantRoutes = [
   {
     path: "/assistant/swagger",
     element: <Swagger />
+  },
+  {
+    path: "/assistant/module-management",
+    element: <ModuleManagement />
   }
+
+  
 ]
 // children: [
 //   {
@@ -286,6 +293,12 @@ export const AssistantMenu = [
     title: "API Docs",
     icon: <Book size={20} />,
     navLink: "/assistant/swagger"
+  },
+  {
+    id: "module",
+    title: "Module Management",
+    icon: <Book size={20} />,
+    navLink: "/assistant/module-management",
   }
 ]
 
