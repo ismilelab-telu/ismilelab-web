@@ -4,6 +4,9 @@ WORKDIR /usr/web/ismile
 
 COPY . .
 
+# Using Corepack
+RUN corepack enable && corepack install
+
 RUN yarn install
 
 RUN yarn build
