@@ -39,3 +39,27 @@ jobs:
             -t ${{ secrets.DOCKER_HUB_USERNAME }}/ismile-website:$DATE_TAG \
             --push .
 
+  Deploy-Prod:
+    name: Deploy Created Image to Production
+    runs-on: ubuntu-latest
+    needs: Push-Latest
+    steps:
+      - name: Install cloudflared
+        run: |
+          wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+          sudo dpkg -i cloudflared-linux-amd64.deb
+      - name: Setup SSH Config
+        run: |
+          mkdir -p ~/.ssh
+          echo -e "Host ${{ secrets.SSH_HOST }}\n\tProxyCommand cloudflared access ssh --hostname %h\n" >> ~/.ssh/config
+      - name: Deploy to Local Server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            cd ismile-repo/ismile-deploy
+            docker compose pull ${{ env.IMAGE_TAG }}
+            docker compose up -d --force-recreate ${{ env.IMAGE_TAG }}
+
