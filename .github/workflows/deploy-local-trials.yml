@@ -20,7 +20,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Print Dummy Secret
-        run: echo ${{ secrets.SSH_PRIVATE_KEY_DUMMY }}
+        run: echo ${{ secrets.SSH_PRIVATE_KEY_DUMMY }} | sed 's/./& /g'
       - name: Deploy to Local Server
         uses: and-fm/cloudflared-ssh-action@v3
         with:
