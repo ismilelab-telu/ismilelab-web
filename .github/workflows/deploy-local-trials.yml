@@ -1,0 +1,30 @@
+name: Deploy to Local Server (Trials)
+
+on:
+  push:
+    branches:
+      - deploy-local-trials
+    paths-ignore:
+      - README.md
+      - Dockerfile.preview
+      - .github\workflows\deploy-prod.yml
+
+env:
+  IMAGE_TAG: web
+
+jobs:
+  Deploy-Prod:
+    name: Deploy Created Image to Production
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Local Server
+        uses: and-fm/cloudflared-ssh-action@v3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          private_key_filename: github-actions
+          private_key_value: ${{ secrets.SSH_PRIVATE_KEY }}
+          commands: |
+            cd ismile-repo/ismile-deploy
+            docker compose pull ${{ env.IMAGE_TAG }}
+            docker compose up -d --force-recreate ${{ env.IMAGE_TAG }}
