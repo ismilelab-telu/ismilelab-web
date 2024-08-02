@@ -44,7 +44,7 @@ const ProctorSchedule = lazy(() => import("../../views/pages/assistant/Proctor/P
 const HomeDashboard = lazy(() => import("../../views/pages/assistant/user/Home"))
 const Swagger = lazy(() => import("../../views/pages/assistant/Swagger/Swagger"))
 const CodePlayground = lazy(() => import('../../views/CodePlayground'))
-const ModuleManagement= lazy(() => import('../../views/pages/assistant/modul/ModuleManagement'))
+const ModuleManagement= lazy(() => import('../../views/pages/assistant/Modul/ModuleManagement'))
 
 const AssistantRoutes = [
   {
