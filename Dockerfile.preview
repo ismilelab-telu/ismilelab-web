@@ -9,6 +9,9 @@ RUN corepack enable && corepack install
 
 RUN yarn install
 
+# Set API URL Placeholder
+ARG VITE_API_BASE_URL=VITE_API_BASE_URL_PLACEHOLDER
+
 RUN yarn build
 
 CMD [ "yarn", "preview", "--host", "0.0.0.0" ]

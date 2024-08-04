@@ -9,10 +9,14 @@ RUN corepack enable && corepack install
 
 RUN yarn install
 
-ENV SKIP_PREFLIGHT_CHECK=true
+ARG SKIP_PREFLIGHT_CHECK=true
+
+# Set API URL Placeholder
+ARG VITE_API_BASE_URL=VITE_API_BASE_URL_PLACEHOLDER
 
 RUN yarn build
 
+# Production Image
 FROM nginx:alpine
 
 COPY --from=build /usr/web/ismile/dist /usr/share/nginx/html
