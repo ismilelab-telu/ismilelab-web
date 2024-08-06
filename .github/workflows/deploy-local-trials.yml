@@ -19,16 +19,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Print Dummy Secret
-        run: echo ${{ vars.SSH_PRIVATE_KEY_DUMMY }}
-      - name: Deploy to Local Server
-        uses: and-fm/cloudflared-ssh-action@v3
+      - name: Connect to Tailscale Network
+        uses: tailscale/github-action@v2
         with:
-          host: ${{ secrets.SSH_HOST }}
+          oauth-client-id: ${{ secrets.TS_GARMA_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_GARMA_OAUTH_SECRET }}
+          tags: tag:ci
+      - name: Deploy to Local
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_TS_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          private_key_filename: github-actions
-          private_key_value: ${{ secrets.SSH_PRIVATE_KEY }}
-          commands: |
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
             cd ismile-repo/ismile-deploy
             docker compose pull ${{ env.IMAGE_TAG }}
             docker compose up -d --force-recreate ${{ env.IMAGE_TAG }}
