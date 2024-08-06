@@ -44,18 +44,18 @@ jobs:
     runs-on: ubuntu-latest
     needs: Push-Latest
     steps:
-      - name: Install cloudflared
-        run: |
-          wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
-          sudo dpkg -i cloudflared-linux-amd64.deb
-      - name: Setup SSH Config
-        run: |
-          mkdir -p ~/.ssh
-          echo -e "Host ${{ secrets.SSH_HOST }}\n\tProxyCommand cloudflared access ssh --hostname %h\n" >> ~/.ssh/config
-      - name: Deploy to Local Server
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Connect to Tailscale Network
+        uses: tailscale/github-action@v2
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci
+      - name: Deploy to Local
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.SSH_HOST }}
+          host: ${{ secrets.SSH_TS_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
