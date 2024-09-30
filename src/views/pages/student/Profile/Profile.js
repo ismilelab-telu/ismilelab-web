@@ -43,12 +43,14 @@ const Profile = () => {
                 <span className='fw-bold'>Account</span>
               </NavLink>
             </NavItem>
-            // <NavItem>
-            //   <NavLink active={activeTab === '2'} onClick={() => toggleTab('2')}>
-            //     <Lock size={18} className='me-50' />
-            //     <span className='fw-bold'>Security</span>
-            //   </NavLink>
-            // </NavItem>
+  /*
+            <NavItem>
+              <NavLink active={activeTab === '2'} onClick={() => toggleTab('2')}>
+                <Lock size={18} className='me-50' />
+                <span className='fw-bold'>Security</span>
+              </NavLink>
+            </NavItem>
+  */
           </Nav>
 
 
