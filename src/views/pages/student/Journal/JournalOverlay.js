@@ -38,12 +38,12 @@ export default function PreTestOverlay({ moduleTitle, moduleNumber }) {
   const toggle = () => {
     if (!isOpen) {
       dispatch(verify()).then(({ payload: { isValid } }) => {
-        if (isValid) {
+        // if (isValid) {
           setIsOpen(!isOpen)
-        } else {
-          window.open(`https://docs.google.com/forms/d/e/1FAIpQLSdV-HWJ9D1QKx6UPVuy_ZGWotJxpTdpQQvGEP8EIyAP66792Q/viewform?usp=pp_url&entry.2072338726=${appToken}`)
-          alert("Isi dulu Google Formnya! Baru boleh submit jurnal :D")
-        }
+        // } else {
+        //   window.open(`https://docs.google.com/forms/d/e/1FAIpQLSdV-HWJ9D1QKx6UPVuy_ZGWotJxpTdpQQvGEP8EIyAP66792Q/viewform?usp=pp_url&entry.2072338726=${appToken}`)
+        //   alert("Isi dulu Google Formnya! Baru boleh submit jurnal :D")
+        // }
       })
     } else {
       setIsOpen(!isOpen)
