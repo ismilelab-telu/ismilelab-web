@@ -25,7 +25,7 @@ export default function Landing() {
 
 function Navbar() {
   return (
-    <nav className="navbar">
+    <nav className="navbar-landing">
       <a className="ismile-logo" href="#">
         <img src={logo} height={"100%"} alt="iSmile Logo" />
       </a>
